@@ -1,4 +1,4 @@
-#学习用 尝试实现Spring的一些功能
+##学习用 尝试实现Spring的一些功能
 
 ## =============================================
 
@@ -32,12 +32,11 @@ component: #将类的实例放到IOC容器
 <nymph xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://www.nymph.com/nymph" 
 	xsi:schemaLocation="http://www.nymph.com/nymph http://www.nymph.com/nymph">
-	<!-- 表示此包下的类将会被容器扫描到, 并且带有@Bean相关注解的类会被注册到bean工厂 -->	
+	<!-- 表示此包下的类将会被容器扫描到 -->	
 	<scanners>
 		<scanner location="com.test"/>
 	</scanners>
 	
-
 	<webConfig>
 		<port value="9900"/>
 		<encoding value="UTF-8"/>
@@ -61,19 +60,19 @@ public class HelloWorld {
 	// 自动注入Man的实例, 如果容器中存在
 	private @Injection Man man;
 
-	// 只允许Get请求访问此方法 @UrlHolder表示url上声明的变量@test
+	// @PathField表示url上声明的变量@test
 	@GET("/get/@test")
-	public String test(@UrlHolder("test") String field, Transfer transfer) {
-		// transfer是内置的类， 用来将数据存到servlet的各作用域(request, session)
-		transfer.ofRequest("q", man);
-		// 表示转发到/WEB-INF/index.jsp
+	public String test(@PathField("test") String field, Transfer transfer) {
+		// 将数据存到servlet的各作用域(request, session)
+		transfer.bindingRequest("q", man);
+		// 表示转发到/index
 		// 当返回值为"->/index"时表示重定向
-		return "/index";
+		return "/index.jsp";
 	}
 
-	// 只允许Post请求访问此方法, @JSON表示返回的对象会被转换为json字符串响应到页面
+	// @Body表示返回的对象会被转换为json字符串响应到页面
 	@POST("/post/@test")
-	@JSON
+	@Body
 	public Man test2(@UrlHolder String test) {
 		System.out.println(test);
 		return man;

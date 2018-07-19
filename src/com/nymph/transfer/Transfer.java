@@ -22,7 +22,7 @@ public class Transfer {
 	 * @param name	参数的名字
 	 * @param value	参数的值
 	 */
-	public void ofRequest(String name, Object value) {
+	public void bindingRequest(String name, Object value) {
 		getRequest().setAttribute(name, value);
 	}
 	/**
@@ -30,7 +30,7 @@ public class Transfer {
 	 * @param name	参数的名字
 	 * @param value	参数的值
 	 */
-	public void ofSession(String name, Object value) {
+	public void bindingSession(String name, Object value) {
 		getSession().setAttribute(name, value);
 	}
 	/**
